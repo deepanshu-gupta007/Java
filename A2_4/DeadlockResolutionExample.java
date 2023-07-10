@@ -1,11 +1,11 @@
-public class DeadlockExample{
+public class DeadlockResolutionExample{
     private static Object r1=new Object();
     private static Object r2=new Object();
-    public static void main(String[] args){
-        Thread t1 = new Thread(()->{
-            synchronized(r1){
+    public static void main(String[] args) {
+        Thread t1=new Thread(()->{
+            synchronized(r1) {
                 System.out.println("Thread 1: Resource 1");
-                try{
+                try {
                     Thread.sleep(100);
                 } 
                 catch(InterruptedException e){
@@ -16,16 +16,17 @@ public class DeadlockExample{
                 }
             }
         });
-        Thread t2 = new Thread(()->{
-            synchronized(r2){
-                System.out.println("Thread 2: Resource 2");
-                try{
+        Thread t2=new Thread(()->{
+            synchronized(r1){
+                System.out.println("Thread 2: Resource 1");
+                try {
                     Thread.sleep(100);
-                } catch(InterruptedException e){
+                } 
+                catch (InterruptedException e){
                     e.printStackTrace();
                 }
-                synchronized(r1){
-                    System.out.println("Thread 2: Resource 1");
+                synchronized (r2) {
+                    System.out.println("Thread 2: Resource 2");
                 }
             }
         });
